@@ -68,4 +68,49 @@ describe('TODOMvc App', () => {
       .children()
       .should('have.length', 2);
   });
+
+  it('Edita uma tarefa existente', () => {
+    cy.visit('');
+
+    cy.get('[data-cy=todo-input]')
+      .type('Estudar Cypress{enter}');
+
+    cy.get('[data-cy=todos-list] li')
+      .dblclick();
+
+    cy.get('[data-cy=todos-list] li input.edit')
+      .clear()
+      .type('Estudar Cypress com testes{enter}');
+
+    cy.get('[data-cy=todos-list]')
+      .children()
+      .first()
+      .should('have.text', 'Estudar Cypress com testes');
+  });
+
+  it('Marca uma tarefa como concluída', () => {
+    cy.visit('');
+
+    cy.get('[data-cy=todo-input]')
+      .type('Estudar para TP2{enter}');
+
+    cy.get('[data-cy=todos-list] li')
+      .first()
+      .find('[data-cy=toggle-todo-checkbox]')
+      .check()
+      .should('be.checked');
+  });
+
+  it('Marca uma tarefa como concluída e verifica que está marcada', () => {
+    cy.visit('');
+
+    cy.get('[data-cy=todo-input]')
+      .type('Fazer relatório do TP2{enter}');
+
+    cy.get('[data-cy=todos-list] li')
+      .first()
+      .find('[data-cy=toggle-todo-checkbox]')
+      .check()
+      .should('be.checked');
+  });
 });
